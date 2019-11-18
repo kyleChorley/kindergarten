@@ -19,11 +19,13 @@ router.get("/", (req, res) => {
     .catch(err => {
       console.log(err);
     });
-router.get('/', (req, res, next) => {
-  res.render('index', {
-    loggedIn: req.user
+  router.get('/', (req, res, next) => {
+    res.render('index', {
+      loggedIn: req.user
+    });
   });
-});
+})
+
 
 
 
