@@ -8,10 +8,13 @@ const Kita = require("../models/Kita");
 // });
 
 router.get("/", (req, res) => {
-  Kita.find({/* "5dd2713b1ca4f7fd0214ec02" */})
+  Kita.find()
     .then(documents => {
       // res.send(documents);
-      res.render("index.hbs");
+      console.log(documents);
+      res.render("index.hbs", {
+        location: documents
+      });
     })
     .catch(err => {
       console.log(err);
