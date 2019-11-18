@@ -3,22 +3,26 @@ const Schema = mongoose.Schema;
 
 const kitaSchema = new Schema({
   name: String,
-  addres: String,
-  postcode: Number,
-  phoneNumber: Number,
-  hours: String,
-  spots: {
-    total: Number,
-    underThree: Number,
-    overThree: Number
-  },
-  admissionAge: Number,
-  neighbourhood: String,
+  einrichtungsart: String,
+  traegerart: String,
+  traegerart2: String,
+  addresse: String,
+  postleitzahl: Number,
+  stadt: String,
+  viertel: String,
+  telefon: String,
   email: String,
   webAddress: String,
-  specials: String,
-  educationalFocus: String,
-  thematicFocus: String
+  angebote: String,
+  pädagogischeSchwerpunkte: String,
+  oeffnungszeiten: String,
+  angeboten: String,
+  unter3Jahre: String,
+  ueber3Jahre: String,
+  frühestesAufnahmealterInMonaten: String,
+  altersmischung: String,
+  pädagogischeAnsätze: String,
+  thematischeSchwerpunkte: String
 });
 
 const Kita = mongoose.model('Kita', kitaSchema);
