@@ -3,8 +3,8 @@ const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
   username: String,
-  password: String
-  name: String
+  password: String,
+  name: String,
   role: {
     type: String,
     enum: ["admin", "regular"],

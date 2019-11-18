@@ -1,2 +1,20 @@
 <h1>{{title}}</h1>
 <p>Welcome to {{title}}</p>
+
+<div id='map' style='width: 400px; height: 300px;'></div>
+<script>
+  mapboxgl.accessToken = 'pk.eyJ1IjoidG9za2FtYWxpc2tlIiwiYSI6ImNrMnp5YzFhdTBra3czZ3A4OWRlYjljM28ifQ.ezvu3fb-mf_LzX6zcKGTVg';
+  var map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/mapbox/streets-v11',
+    center: [13.40, 52.52],
+    zoom: 10
+  });
+
+  let marker = new mapboxgl.Marker({
+    draggable: true,
+    color: "red"
+  }).setLngLat([13.40, 52.52]).addTo(map);
+
+
+</script>

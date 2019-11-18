@@ -25,5 +25,6 @@ const kitaSchema = new Schema({
   thematischeSchwerpunkte: String
 });
 
-const Kita = mongoose.model('Kita', kitaSchema);
+
+const Kita = mongoose.model('Kita', kitaSchema, "kitaBerlin");
 module.exports = Kita;
