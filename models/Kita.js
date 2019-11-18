@@ -14,16 +14,16 @@ const kitaSchema = new Schema({
   email: String,
   webAddress: String,
   angebote: String,
-  pädagogischeSchwerpunkte: String,
+  paedagogischeSchwerpunkte: String,
   oeffnungszeiten: String,
   angeboten: String,
   unter3Jahre: String,
   ueber3Jahre: String,
-  frühestesAufnahmealterInMonaten: String,
+  fruehestesAufnahmealterInMonaten: String,
   altersmischung: String,
-  pädagogischeAnsätze: String,
+  paedagogischeAnsaetze: String,
   thematischeSchwerpunkte: String
 });
 
-const Kita = mongoose.model('Kita', kitaSchema);
+const Kita = mongoose.model('Kita', kitaSchema, "kitaBerlin");
 module.exports = Kita;
