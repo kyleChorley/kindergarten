@@ -63,12 +63,9 @@ hbs.registerHelper('ifUndefined', (value, options) => {
   }
 });
 
-<<<<<<< HEAD
 hbs.registerHelper("json", (obj)=> {
   return new hbs.SafeString(JSON.stringify(obj))
 });
-=======
->>>>>>> 402e0e1fe88be63c131c50fd94ecacecbf22f9fe
 
 // default value for title local
 app.locals.title = 'Kindergarten';
@@ -85,10 +82,7 @@ app.use(session({
 }))
 app.use(flash());
 require('./passport')(app);
-<<<<<<< HEAD
 
-=======
->>>>>>> 402e0e1fe88be63c131c50fd94ecacecbf22f9fe
 
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
@@ -166,16 +160,13 @@ app.locals.title = "Kindergarten";
 const index = require("./routes/index");
 app.use("/", index);
 
-<<<<<<< HEAD
 const authRoutes = require('./routes/auth');
 app.use('/auth', authRoutes);
 
 
 
 
-=======
 const authRoutes = require("./routes/auth");
 app.use("/auth", authRoutes);
 
->>>>>>> 402e0e1fe88be63c131c50fd94ecacecbf22f9fe
 module.exports = app;
