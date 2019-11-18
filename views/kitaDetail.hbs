@@ -1,0 +1,49 @@
+<h1>{{name}}</h1>
+
+<p>Addresse: {{addresse}}</p>
+<p>Postleitzahl: {{postleitzahl}}</p>
+<p>Stadt: {{stadt}}</p>
+<p>Viertel: {{viertel}}</p>
+<p>Telefon: {{telefon}}</p>
+<p>Email: {{email}}</p>
+<p>Web Address: {{webAddress}}</p>
+<p>Öffnungszeiten: {{oeffnungszeiten}}</p>
+<p>Angeboten: {{angeboten}}</p>
+<p>Unter 3 Jahre: {{unter3Jahre}}</p>
+<p>Über 3 Jahre: {{ueber3Jahre}}</p>
+<p>Frühestes Aufnahmealter In Monaten: {{fruehestesAufnahmealterInMonaten}}</p>
+<p>Altersmischung: {{altersmischung}}</p>
+<p>Angebote: {{angebote}}</p>
+<p>Einrichtungsart: {{einrichtungsart}}</p>
+<p>Trägerart: {{traegerart}}</p>
+<p>Trägerart 2: {{traegerart2}}</p>
+<p>Pädagogische Schwerpunkte: {{paedagogischeSchwerpunkte}}</p>
+<p>Pädagogische Ansätze: {{paedagogischeAnsaetze}}</p>
+<p>Thematische Schwerpunkte: {{thematischeSchwerpunkte}}</p>
+
+
+<form id="comment-form">
+  <label for="comment">Add a comment</label>
+  <input type="text" id="comment">
+</form>
+
+<script>
+  document.getElementById('comment-form').onsubmit = event => {
+    event.preventDefault(); // prevents the default behaviour of the form
+
+    axios.post("/kitaDetail/{{kita._id}}/comment", {
+      comment: document.getElementById('comment').value
+    }).then(response => {
+      let commentBox = '<h2>Comments</h2>';
+
+      response.data.forEach(comment => {
+        commentBox += `<h4>${comment.author.username}</h4><p>${comment.content}</p>`
+      })
+      document.getElementById("comment-box").innerHTML = commentBox;
+
+      document.getElementById('comment').value = ""
+    }).catch(err => {
+      console.log(err);
+    })
+  }
+</script>

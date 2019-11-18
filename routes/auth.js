@@ -9,7 +9,9 @@ const bcryptSalt = 10;
 
 
 router.get("/login", (req, res, next) => {
-  res.render("auth/login", { "message": req.flash("error") });
+  res.render("auth/login", {
+    "message": req.flash("error")
+  });
 });
 
 router.post("/login", passport.authenticate("local", {
@@ -24,36 +26,97 @@ router.get("/signup", (req, res, next) => {
 });
 
 router.post("/signup", (req, res, next) => {
-  const username = req.body.username;
-  const password = req.body.password;
-  if (username === "" || password === "") {
-    res.render("auth/signup", { message: "Indicate username and password" });
+  const {
+    username,
+    password
+  } = req.body;
+
+  if (!username) {
+    res.render("auth/signup.hbs", {
+      message: "Username can't be empty"
+    });
     return;
   }
-
-  User.findOne({ username }, "username", (err, user) => {
-    if (user !== null) {
-      res.render("auth/signup", { message: "The username already exists" });
-      return;
-    }
-
-    const salt = bcrypt.genSaltSync(bcryptSalt);
-    const hashPass = bcrypt.hashSync(password, salt);
-
-    const newUser = new User({
-      username,
-      password: hashPass
+  if (password.length < 8) {
+    res.render("auth/signup.hbs", {
+      message: "Password is too short"
     });
-
-    newUser.save()
-    .then(() => {
-      res.redirect("/");
+    return;
+  }
+  User.findOne({
+      username: username
+    })
+    .then(found => {
+      if (found) {
+        res.render("auth/signup.hbs", {
+          message: "Username is already taken"
+        });
+        return;
+      }
+      return bcrypt
+        .genSalt()
+        .then(salt => {
+          return bcrypt.hash(password, salt);
+        })
+        .then(hash => {
+          return User.create({
+            username: username,
+            password: hash
+          });
+        })
+        .then(newUser => {
+          console.log(username, password);
+          //   authenticating the user with passport
+          req.login(newUser, err => {
+            if (err) next(err);
+            else res.redirect("/");
+          });
+        });
     })
     .catch(err => {
-      res.render("auth/signup", { message: "Something went wrong" });
-    })
-  });
+      next(err);
+    });
 });
+
+// router.post("/signup", (req, res, next) => {
+//   const username = req.body.username;
+//   const password = req.body.password;
+//   if (username === "" || password === "") {
+//     res.render("auth/signup", {
+//       message: "Indicate username and password"
+//     });
+//     return;
+//   }
+
+//   User.findOne({
+//     username
+//   }, "username", (err, user) => {
+//     if (user !== null) {
+//       res.render("auth/signup", {
+//         message: "The username already exists"
+//       });
+//       return;
+//     }
+
+//     const salt = bcrypt.genSaltSync(bcryptSalt);
+//     const hashPass = bcrypt.hashSync(password, salt);
+
+//     const newUser = new User({
+//       username,
+//       password: hashPass
+//     });
+
+//     newUser.save()
+//       .then(() => {
+//         res.redirect("/");
+//       })
+//       .catch(err => {
+//         res.render("auth/signup", {
+//           message: "Something went wrong"
+//         });
+//       })
+//   });
+// });
 
 router.get("/logout", (req, res) => {
   req.logout();

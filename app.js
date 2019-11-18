@@ -63,9 +63,12 @@ hbs.registerHelper('ifUndefined', (value, options) => {
   }
 });
 
+<<<<<<< HEAD
 hbs.registerHelper("json", (obj)=> {
   return new hbs.SafeString(JSON.stringify(obj))
 });
+=======
+>>>>>>> 402e0e1fe88be63c131c50fd94ecacecbf22f9fe
 
 // default value for title local
 app.locals.title = 'Kindergarten';
@@ -82,15 +85,97 @@ app.use(session({
 }))
 app.use(flash());
 require('./passport')(app);
+<<<<<<< HEAD
+
+=======
+>>>>>>> 402e0e1fe88be63c131c50fd94ecacecbf22f9fe
+
+const passport = require("passport");
+const LocalStrategy = require("passport-local").Strategy;
+
+const User = require("./models/User");
+
+passport.serializeUser((user, done) => {
+  done(null, user._id);
+});
+
+passport.deserializeUser((id, done) => {
+  User.findById(id)
+    .then(user => {
+      done(null, user);
+    })
+    .catch(err => {
+      done(err);
+    });
+});
+
+const bcrypt = require("bcrypt");
+
+passport.use(
+  new LocalStrategy((username, password, done) => {
+    User.findOne({
+        username: username
+      })
+      .then(user => {
+        if (!user) {
+          done(null, false, {
+            message: "Invalid credentials"
+          });
+          return;
+        }
+        return bcrypt.compare(password, user.password).then(bool => {
+          if (bool === false) {
+            done(null, false, {
+              message: "Invalid credentials"
+            });
+          } else {
+            // passwords match
+            done(null, user);
+          }
+        });
+      })
+      .catch(err => {
+        done(err);
+      });
+  })
+);
 
 
-const index = require('./routes/index');
-app.use('/', index);
 
+app.use(passport.initialize());
+app.use(passport.session());
+
+// Express View engine setup
+
+app.use(
+  require("node-sass-middleware")({
+    src: path.join(__dirname, "public"),
+    dest: path.join(__dirname, "public"),
+    sourceMap: true
+  })
+);
+
+app.set("views", path.join(__dirname, "views"));
+app.set("view engine", "hbs");
+app.use(express.static(path.join(__dirname, "public")));
+app.use(favicon(path.join(__dirname, "public", "images", "favicon.ico")));
+
+// default value for title local
+app.locals.title = "Kindergarten";
+
+const index = require("./routes/index");
+app.use("/", index);
+
+<<<<<<< HEAD
 const authRoutes = require('./routes/auth');
 app.use('/auth', authRoutes);
 
 
 
 
+=======
+const authRoutes = require("./routes/auth");
+app.use("/auth", authRoutes);
+
+>>>>>>> 402e0e1fe88be63c131c50fd94ecacecbf22f9fe
 module.exports = app;
