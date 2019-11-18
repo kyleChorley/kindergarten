@@ -1,5 +1,12 @@
 <h1>{{name}}</h1>
 
+
+<form id="form_id" onsubmit="return false;">
+  <input type="checkbox" name="kita" value="{{name}}" checked> Add to my application list.<br>
+  <button onclick="addCheck();">Add to my list.</button>
+</form>
+
+
 <p>Addresse: {{addresse}}</p>
 <p>Postleitzahl: {{postleitzahl}}</p>
 <p>Stadt: {{stadt}}</p>

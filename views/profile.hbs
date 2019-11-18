@@ -1,0 +1,39 @@
+<h1>Welcome {{user.username}}</h1>
+
+
+{{#if kitas}}
+<h2>Kita Wishlist</h2>
+{{/if}}
+{{#each kitas}}
+<div>
+  <a href="/kitaDetail/{{_id}}">{{name}}</a>
+</div>
+{{/each}}
+
+<p id="output"></p>
+
+<script type="text/javascript">
+  function getCheckboxes(form_id, name) {
+    // returns array of checked checkboxes with 'name' in 'form_id'
+    var form = document.getElementById(form_id);
+    var inputs = form.getElementsByTagName("input");
+    var values = [];
+    for (var i = 0; i < inputs.length; ++i) {
+      if (inputs[i].type === "checkbox" &&
+        inputs[i].name === name &&
+        inputs[i].checked) {
+        values.push(inputs[i].value);
+      }
+    }
+    return values;
+  }
+
+  function addCheck() {
+    var kitas = getCheckboxes("form_id", "vehicle");
+
+    var output = document.getElementById("output");
+    var msg = "Selected Kitas: <br />";
+    msg += kitas.length > 0 ? kitas.toString() : "-";
+    output.innerHTML = msg;
+  }
+</script>
