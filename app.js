@@ -80,12 +80,83 @@ app.use(session({
 app.use(flash());
 require('./passport')(app);
 
+const passport = require("passport");
+const LocalStrategy = require("passport-local").Strategy;
 
-const index = require('./routes/index');
-app.use('/', index);
+const User = require("./models/User");
 
-const authRoutes = require('./routes/auth');
-app.use('/auth', authRoutes);
+passport.serializeUser((user, done) => {
+  done(null, user._id);
+});
 
+passport.deserializeUser((id, done) => {
+  User.findById(id)
+    .then(user => {
+      done(null, user);
+    })
+    .catch(err => {
+      done(err);
+    });
+});
+
+const bcrypt = require("bcrypt");
+
+passport.use(
+  new LocalStrategy((username, password, done) => {
+    User.findOne({
+        username: username
+      })
+      .then(user => {
+        if (!user) {
+          done(null, false, {
+            message: "Invalid credentials"
+          });
+          return;
+        }
+        return bcrypt.compare(password, user.password).then(bool => {
+          if (bool === false) {
+            done(null, false, {
+              message: "Invalid credentials"
+            });
+          } else {
+            // passwords match
+            done(null, user);
+          }
+        });
+      })
+      .catch(err => {
+        done(err);
+      });
+  })
+);
+
+
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+// Express View engine setup
+
+app.use(
+  require("node-sass-middleware")({
+    src: path.join(__dirname, "public"),
+    dest: path.join(__dirname, "public"),
+    sourceMap: true
+  })
+);
+
+app.set("views", path.join(__dirname, "views"));
+app.set("view engine", "hbs");
+app.use(express.static(path.join(__dirname, "public")));
+app.use(favicon(path.join(__dirname, "public", "images", "favicon.ico")));
+
+// default value for title local
+app.locals.title = "IronBNB";
+
+const index = require("./routes/index");
+app.use("/", index);
+
+const authRoutes = require("./routes/auth");
+app.use("/auth", authRoutes);
 
 module.exports = app;

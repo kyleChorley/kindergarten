@@ -21,11 +21,17 @@
 <p>Pädagogische Ansätze: {{paedagogischeAnsaetze}}</p>
 <p>Thematische Schwerpunkte: {{thematischeSchwerpunkte}}</p>
 
+
+<form id="comment-form">
+  <label for="comment">Add a comment</label>
+  <input type="text" id="comment">
+</form>
+
 <script>
   document.getElementById('comment-form').onsubmit = event => {
     event.preventDefault(); // prevents the default behaviour of the form
 
-    axios.post("/rooms/{{room._id}}/comment", {
+    axios.post("/kitaDetail/{{kita._id}}/comment", {
       comment: document.getElementById('comment').value
     }).then(response => {
       let commentBox = '<h2>Comments</h2>';

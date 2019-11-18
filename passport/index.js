@@ -20,66 +20,66 @@ router.get("/", (req, res) => {
   });
 });
 
-const loginCheck = () => {
-  return (req, res, next) => {
-    if (req.user) {
-      next();
-    } else {
-      res.redirect("/");
-    }
-  };
-};
+// const loginCheck = () => {
+//   return (req, res, next) => {
+//     if (req.user) {
+//       next();
+//     } else {
+//       res.redirect("/");
+//     }
+//   };
+// };
 
-router.get("/profile", loginCheck(), (req, res, next) => {
-  Room.find({
-      owner: req.user._id
-    })
-    .then(rooms => {
-      res.render("profile.hbs", {
-        user: req.user,
-        rooms: rooms
-      });
-    })
-    .catch(err => {
-      next(err);
-    });
-});
+// router.get("/profile", loginCheck(), (req, res, next) => {
+//   Room.find({
+//       owner: req.user._id
+//     })
+//     .then(rooms => {
+//       res.render("profile.hbs", {
+//         user: req.user,
+//         rooms: rooms
+//       });
+//     })
+//     .catch(err => {
+//       next(err);
+//     });
+// });
 
 
-router.post("/kitaDetail/:kitaId/comment", loginCheck(), (req, res, next) => {
-  const content = req.body.comment;
-  const author = req.user._id;
+// router.post("/kitaDetail/:kitaId/comment", loginCheck(), (req, res, next) => {
+//   const content = req.body.comment;
+//   const author = req.user._id;
 
-  Comment.create({
-      content: content,
-      author: author
-    })
-    .then(comment => {
-      return Kita.findOneAndUpdate({
-          _id: req.params.kitaId
-        }, {
-          $push: {
-            comments: comment._id
-          }
-        }, {
-          new: true
-        })
-        .populate({
-          path: "comments", // populates the `comments` field in the Room
-          populate: {
-            path: "author" // populates the `author` field in the Comment
-          }
-        })
-        .then(kita => {
-          res.json(kita.comments); // updated comments array
+//   Comment.create({
+//       content: content,
+//       author: author
+//     })
+//     .then(comment => {
+//       return Kita.findOneAndUpdate({
+//           _id: req.params.kitaId
+//         }, {
+//           $push: {
+//             comments: comment._id
+//           }
+//         }, {
+//           new: true
+//         })
+//         .populate({
+//           path: "comments", // populates the `comments` field in the Room
+//           populate: {
+//             path: "author" // populates the `author` field in the Comment
+//           }
+//         })
+//         .then(kita => {
+//           res.json(kita.comments); // updated comments array
 
-          // send the room's document
-          // res.redirect(`/rooms/${req.params.roomId}`);
-        });
-    })
-    .catch(err => {
-      next(err);
-    });
-});
+//           // send the room's document
+//           // res.redirect(`/rooms/${req.params.roomId}`);
+//         });
+//     })
+//     .catch(err => {
+//       next(err);
+//     });
+// });
 
-module.exports = router;
+// module.exports = router;
