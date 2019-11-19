@@ -22,7 +22,11 @@ const kitaSchema = new Schema({
   fruehestesAufnahmealterInMonaten: String,
   altersmischung: String,
   paedagogischeAnsaetze: String,
-  thematischeSchwerpunkte: String
+  thematischeSchwerpunkte: String,
+  comments: [{
+    type: Schema.Types.ObjectId,
+    ref: "Comment"
+  }]
 });
 
 

@@ -1,0 +1,54 @@
+<h1>Welcome {{user.name}}</h1>
+<a href='/5dd28caa883a5e7d53a230b5'>Go to a very specific Kita</a>
+
+{{!-- {{#if kitas}}
+<h2>Kita Wishlist</h2>
+{{/if}}
+{{#each kitas}}
+<div>
+  <a href="/kitaDetail/{{_id}}">{{name}}</a>
+</div>
+{{/each}} --}}
+
+<div id="comment-box">
+  {{#if comments}}
+  <h2>Comments</h2>
+  {{#each comments}}
+  {{#with kita}}
+  <h4>{{name}}</h4>
+  {{/with}}
+
+  <p>{{content}}</p>
+  {{/each}}
+  {{/if}}
+</div>
+
+
+
+{{!-- <p id="output"></p>
+
+<script type="text/javascript">
+  function getCheckboxes(form_id, name) {
+    // returns array of checked checkboxes with 'name' in 'form_id'
+    var form = document.getElementById(form_id);
+    var inputs = form.getElementsByTagName("input");
+    var values = [];
+    for (var i = 0; i < inputs.length; ++i) {
+      if (inputs[i].type === "checkbox" &&
+        inputs[i].name === kita &&
+        inputs[i].checked) {
+        values.push(inputs[i].value);
+      }
+    }
+    return values;
+  }
+
+  function addCheck() {
+    var kitas = getCheckboxes("form_id", "kita");
+
+    var output = document.getElementById("output");
+    var msg = "Selected Kitas: ";
+    msg += kitas.length > 0 ? kitas.toString() : "-";
+    output.innerHTML = msg;
+  }
+</script> --}}

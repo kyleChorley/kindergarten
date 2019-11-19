@@ -1,5 +1,13 @@
 <h1>{{name}}</h1>
 
+
+{{!-- <form id="form_id" onsubmit="return false;">
+  <input type="checkbox" name="kita" value="{{name}}" checked> Add to my application list.<br>
+  <button onclick="addCheck();">Add to my list.</button>
+</form> --}}
+
+{{#with kita}}
+<h1>{{name}}</h1>
 <p>Addresse: {{addresse}}</p>
 <p>Postleitzahl: {{postleitzahl}}</p>
 <p>Stadt: {{stadt}}</p>
@@ -20,6 +28,16 @@
 <p>Pädagogische Schwerpunkte: {{paedagogischeSchwerpunkte}}</p>
 <p>Pädagogische Ansätze: {{paedagogischeAnsaetze}}</p>
 <p>Thematische Schwerpunkte: {{thematischeSchwerpunkte}}</p>
+{{/with}}
+<div id="comment-box">
+  {{#if kita.comments}}
+  <h2>Comments</h2>
+  {{#each kita.comments}}
+  <h4>{{author.name}}</h4>
+  <p>{{content}}</p>
+  {{/each}}
+  {{/if}}
+</div>
 
 
 <form id="comment-form">
@@ -37,7 +55,7 @@
       let commentBox = '<h2>Comments</h2>';
 
       response.data.forEach(comment => {
-        commentBox += `<h4>${comment.author.username}</h4><p>${comment.content}</p>`
+        commentBox += `<h4>${comment.author.name}</h4><p>${comment.content}</p>`
       })
       document.getElementById("comment-box").innerHTML = commentBox;
 
