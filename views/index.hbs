@@ -1,7 +1,19 @@
-<!DOCTYPE html>
-<html>
+<h1>{{title}}</h1>
+<p>Welcome to {{title}}</p>
 
-<head>
+<a href="/map">Go to map</a>
+
+{{!-- <div id='map' style='width: 400px; height: 300px;'></div> --}}
+{{!-- mapboxgl.accessToken = 'pk.eyJ1IjoidG9za2FtYWxpc2tlIiwiYSI6ImNrMnp5YzFhdTBra3czZ3A4OWRlYjljM28ifQ.ezvu3fb-mf_LzX6zcKGTVg';
+  var map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/mapbox/streets-v11',
+    center: [13.40, 52.52],
+    zoom: 10
+  }); --}}
+
+
+{{!-- <head>
   <meta charset='utf-8' />
   <title>Add a marker using a place name</title>
   <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
@@ -23,25 +35,25 @@
 </head>
 
 <body>
-  let spot = {{json location}}
-
   <div id='map'></div>
   <script src='https://unpkg.com/es6-promise@4.2.4/dist/es6-promise.auto.min.js'></script>
   <script src="https://unpkg.com/@mapbox/mapbox-sdk/umd/mapbox-sdk.min.js"></script>
+
   <script>
     mapboxgl.accessToken = 'pk.eyJ1IjoidG9za2FtYWxpc2tlIiwiYSI6ImNrMnp5YzFhdTBra3czZ3A4OWRlYjljM28ifQ.ezvu3fb-mf_LzX6zcKGTVg';
     var mapboxClient = mapboxSdk({ accessToken: mapboxgl.accessToken });
     mapboxClient.geocoding.forwardGeocode({
-      query: `${spot.addresse}, ${spot.stadt}`,
+      //only works with a string!
+      query: 'Wellington',
       autocomplete: false,
-      limit: 1
     })
       .send()
       .then(function (response) {
         if (response && response.body && response.body.features && response.body.features.length) {
           var feature = response.body.features[0];
 
-          var map = new mapboxgl.Map({
+
+          let map = new mapboxgl.Map({
             container: 'map',
             style: 'mapbox://styles/mapbox/streets-v11',
             center: feature.center,
@@ -53,8 +65,7 @@
         }
       });
 
+
+
   </script>
-
-</body>
-
-</html>
+</body> --}}

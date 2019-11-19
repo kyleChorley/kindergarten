@@ -63,7 +63,7 @@ hbs.registerHelper('ifUndefined', (value, options) => {
   }
 });
 
-hbs.registerHelper("json", (obj)=> {
+hbs.registerHelper("json", (obj) => {
   return new hbs.SafeString(JSON.stringify(obj))
 });
 
@@ -162,11 +162,5 @@ app.use("/", index);
 
 const authRoutes = require('./routes/auth');
 app.use('/auth', authRoutes);
-
-
-
-
-const authRoutes = require("./routes/auth");
-app.use("/auth", authRoutes);
 
 module.exports = app;
