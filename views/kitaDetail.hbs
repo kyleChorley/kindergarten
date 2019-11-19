@@ -28,6 +28,14 @@
 <p>Pädagogische Schwerpunkte: {{paedagogischeSchwerpunkte}}</p>
 <p>Pädagogische Ansätze: {{paedagogischeAnsaetze}}</p>
 <p>Thematische Schwerpunkte: {{thematischeSchwerpunkte}}</p>
+
+
+{{!-- {{#if showDelete}}
+<a href="/kitaDetail/{{comment._id}}/delete">Delete this comment. ❌</a>
+{{/if}} --}}
+
+
+
 {{/with}}
 <div id="comment-box">
   {{#if kita.comments}}
@@ -38,6 +46,8 @@
   {{/each}}
   {{/if}}
 </div>
+
+
 
 
 <form id="comment-form">

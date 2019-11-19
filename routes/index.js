@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Kita = require("../models/Kita");
 const Comment = require("../models/Comment")
+const User = require("../models/User");
 /* GET home page */
 
 
@@ -74,6 +75,8 @@ router.get("/profile", loginCheck(), (req, res, next) => {
       res.render("profile.hbs", {
         comments: response,
         loggedIn: req.user,
+        // showDelete: req.comment.author.toString() === req.user._id.toString() ||
+        //   req.user.role === "admin",
         user: req.user,
         kitas: req.user.kitas
       });
@@ -83,20 +86,26 @@ router.get("/profile", loginCheck(), (req, res, next) => {
     });
 });
 
-router.get("/:kitaId", loginCheck(), (req, res, next) => {
+
+
+router.get('/profile/:commentId/delete', (req, res) => {
+  const id = req.params.commentId
+  Comment.findByIdAndDelete(id).then(comment => {
+    console.log(comment)
+    res.redirect('/profile')
+  }).catch(err => {
+    next(err);
+  });
+})
+
+router.get("/kita/:kitaId", loginCheck(), (req, res, next) => {
+
   Kita.findById(req.params.kitaId)
-    .populate({
-      path: "comments", // populates the `comments` field in the Kita
-      populate: {
-        path: "author" // populates the `author` field in the Comment
-      }
-    })
     .then(kita => {
-      console.log(kita);
-      res.render("kitaDetail.hbs", {
-        kita: kita,
-        loggedIn: req.user
-      });
+      res.render('kitaDetail.hbs', {
+        kita: kita
+      })
+
     })
     .catch(err => {
       next(err);
@@ -137,5 +146,27 @@ router.post("/kitaDetail/:kitaId/comment", loginCheck(), (req, res, next) => {
       next(err);
     });
 });
+
+// router.get("/kitaDetail/:kitaId/delete", loginCheck(), (req, res, next) => {
+//   const query = {
+//     _id: req.params.kitaId
+//   };
+
+//   if (req.user.role !== "admin") {
+//     query.owner = req.user._id;
+//   }
+
+//   // if the user that made the request is the one that created the room:
+//   // delete the comment where the `_id` of the  is the one from the params and the `owner` of the room is the user who made the request
+
+//   Comment.deleteOne(query)
+//     .then(() => {
+//       res.redirect("/kitaDetail/:kitaId");
+//     })
+//     .catch(err => {
+//       next(err);
+//     });
+// });
+
 
 module.exports = router;
