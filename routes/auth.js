@@ -7,6 +7,21 @@ const User = require("../models/User");
 const bcrypt = require("bcrypt");
 const bcryptSalt = 10;
 
+// GET /auth/google
+router.get("/google", passport.authenticate("google", {
+  scope: ["profile"]
+}));
+
+
+// GET /auth/google/callback
+router.get(
+  "/google/callback",
+  passport.authenticate("google", {
+    failureRedirect: "/auth/login",
+    successRedirect: "/"
+  })
+);
+
 
 router.get("/login", (req, res, next) => {
   res.render("auth/login", {
