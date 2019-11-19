@@ -70742,15 +70742,16 @@ const kitas = [{
 const mongoose = require("mongoose");
 const Kita = require("../models/Kita");
 
-mongoose.connect("mongodb://localhost/kindergarten");
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/kindergarten");
 
 const processedKitas = kitas.map(x => {
   x._id = null
-if (!x.lat === ""){
-  x.lat = parseFloat(x.lat)
-} if (!x.long === "") {
-  x.long = parseFloat(x.long)
-} 
+  if (!x.lat === "") {
+    x.lat = parseFloat(x.lat)
+  }
+  if (!x.long === "") {
+    x.long = parseFloat(x.long)
+  }
   return x
 })
 
