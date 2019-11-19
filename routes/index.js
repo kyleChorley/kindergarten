@@ -1,11 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const Kita = require("../models/Kita");
-
+const Comment = require("../models/Comment")
 /* GET home page */
-router.get('/', (req, res, next) => {
-  res.render('index');
-});
+
 
 // router.get("/", (req, res) => {
 //   Kita.find()
@@ -46,10 +44,13 @@ router.get("/api/kitas", (req, res, next) => {
     .catch(err => {
       next(err);
     });
-  router.get("/", (req, res, next) => {
-    res.render("index", {
-      loggedIn: req.user
-    });
+
+
+});
+
+router.get("/", (req, res, next) => {
+  res.render("index", {
+    loggedIn: req.user
   });
 });
 
