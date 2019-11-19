@@ -1,71 +1,74 @@
-<h1>{{title}}</h1>
-<p>Welcome to {{title}}</p>
+<!DOCTYPE html>
+<html lang="en">
 
-<a href="/map">Go to map</a>
-
-{{!-- <div id='map' style='width: 400px; height: 300px;'></div> --}}
-{{!-- mapboxgl.accessToken = 'pk.eyJ1IjoidG9za2FtYWxpc2tlIiwiYSI6ImNrMnp5YzFhdTBra3czZ3A4OWRlYjljM28ifQ.ezvu3fb-mf_LzX6zcKGTVg';
-  var map = new mapboxgl.Map({
-    container: 'map',
-    style: 'mapbox://styles/mapbox/streets-v11',
-    center: [13.40, 52.52],
-    zoom: 10
-  }); --}}
-
-
-{{!-- <head>
-  <meta charset='utf-8' />
-  <title>Add a marker using a place name</title>
-  <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
-  <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.5.0/mapbox-gl.js'></script>
-  <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.5.0/mapbox-gl.css' rel='stylesheet' />
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-    }
-
-    #map {
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      width: 100%;
-    }
-  </style>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>{{title}}</title>
+  <link rel="stylesheet" href="/stylesheets/style.css" />
+  <script src='https://api.mapbox.com/mapbox-gl-js/v1.4.1/mapbox-gl.js'></script>
+  <link href='https://api.mapbox.com/mapbox-gl-js/v1.4.1/mapbox-gl.css' rel='stylesheet' />
+  <script <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
 
 <body>
-  <div id='map'></div>
-  <script src='https://unpkg.com/es6-promise@4.2.4/dist/es6-promise.auto.min.js'></script>
-  <script src="https://unpkg.com/@mapbox/mapbox-sdk/umd/mapbox-sdk.min.js"></script>
 
-  <script>
-    mapboxgl.accessToken = 'pk.eyJ1IjoidG9za2FtYWxpc2tlIiwiYSI6ImNrMnp5YzFhdTBra3czZ3A4OWRlYjljM28ifQ.ezvu3fb-mf_LzX6zcKGTVg';
-    var mapboxClient = mapboxSdk({ accessToken: mapboxgl.accessToken });
-    mapboxClient.geocoding.forwardGeocode({
-      //only works with a string!
-      query: 'Wellington',
-      autocomplete: false,
-    })
-      .send()
-      .then(function (response) {
-        if (response && response.body && response.body.features && response.body.features.length) {
-          var feature = response.body.features[0];
+  <nav class="navbar">
 
+    <div class="header">
+      <div>
+        <a href="/">Kindergarten</a>
+      </div>
+      <form>
+        <input type="search" placeholder="Search" aria-label="Search">
+        <button class="btn" type="submit">Search</button>
+      </form>
+      <div>
+        {{#if loggedIn}}
+        <h1>Hello loggedin</h1>
+        <a href="/profile">Profile</a>
+        <a href="/auth/logout">Log out</a>
+        {{else}}
+        <a href="/auth/signup">Sign up</a>
+        <a href="/auth/login">Log in</a>
+        <a href="/auth/google">Log in with Google</a>
+        {{/if}}
+      </div>
+      <h1>Find your Kita</h1>
 
-          let map = new mapboxgl.Map({
-            container: 'map',
-            style: 'mapbox://styles/mapbox/streets-v11',
-            center: feature.center,
-            zoom: 10
-          });
-          new mapboxgl.Marker()
-            .setLngLat(feature.center)
-            .addTo(map);
-        }
+    </div>
+
+    <div id='map' style='width: 400px; height: 300px;'></div>
+
+    <script>
+
+      mapboxgl.accessToken = 'pk.eyJ1IjoidG9za2FtYWxpc2tlIiwiYSI6ImNrMnp5YzFhdTBra3czZ3A4OWRlYjljM28ifQ.ezvu3fb-mf_LzX6zcKGTVg';
+      var map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/streets-v11',
+        //centering the map - with googled longitude + latitude values for Berlin:
+        center: [13.40, 52.52],
+        zoom: 14
       });
 
+      map.addControl(new mapboxgl.NavigationControl());
 
+      const getMarkers = () => {
+        axios.get('/api/kitas').then(response => {
+          console.log('map', response)
+          response.data.forEach(point => {
+            console.log(point);
+            const coordinates = [point.long, point.lat];
+            new mapboxgl.Marker().setLngLat(coordinates).addTo(map)
+          })
+        })
+      }
 
-  </script>
-</body> --}}
+      getMarkers();
+
+    </script>
+
+</body>
+
+</html>

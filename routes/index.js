@@ -5,9 +5,9 @@ const Comment = require("../models/Comment")
 /* GET home page */
 
 
-router.get("/map", (req, res, next) => {
-  res.render("map.hbs");
-});
+// router.get("/map", (req, res, next) => {
+//   res.render("map.hbs");
+// });
 
 router.get("/api/kitas", (req, res, next) => {
   Kita.find()
