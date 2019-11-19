@@ -1,16 +1,31 @@
-<h1>Welcome {{user.username}}</h1>
+<h1>Welcome {{user.name}}</h1>
+<a href='/5dd28caa883a5e7d53a230b5'>Go to a very specific Kita</a>
 
-
-{{#if kitas}}
+{{!-- {{#if kitas}}
 <h2>Kita Wishlist</h2>
 {{/if}}
 {{#each kitas}}
 <div>
   <a href="/kitaDetail/{{_id}}">{{name}}</a>
 </div>
-{{/each}}
+{{/each}} --}}
 
-<p id="output"></p>
+<div id="comment-box">
+  {{#if comments}}
+  <h2>Comments</h2>
+  {{#each comments}}
+  {{#with kita}}
+  <h4>{{name}}</h4>
+  {{/with}}
+
+  <p>{{content}}</p>
+  {{/each}}
+  {{/if}}
+</div>
+
+
+
+{{!-- <p id="output"></p>
 
 <script type="text/javascript">
   function getCheckboxes(form_id, name) {
@@ -36,4 +51,4 @@
     msg += kitas.length > 0 ? kitas.toString() : "-";
     output.innerHTML = msg;
   }
-</script>
+</script> --}}
