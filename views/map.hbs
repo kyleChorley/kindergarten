@@ -1,5 +1,4 @@
 <h1>Find your Kita</h1>
-<p>{{kitas.viertel}}</p>
 
 <div id='map' style='width: 400px; height: 300px;'></div>
 
@@ -10,7 +9,7 @@
     style: 'mapbox://styles/mapbox/streets-v11',
     //centering the map - with googled longitude + latitude values for Berlin:
     center: [13.40, 52.52],
-    zoom: 10
+    zoom: 14
   });
 
   map.addControl(new mapboxgl.NavigationControl());
@@ -18,8 +17,7 @@
   const getMarkers = () => {
     axios.get('/api/kitas').then(response => {
       console.log('map', response)
-      let formattedRes = [response.data]
-      formattedRes.forEach(point => {
+      response.data.forEach(point => {
         console.log(point);
         const coordinates = [point.long, point.lat];
         new mapboxgl.Marker().setLngLat(coordinates).addTo(map)
