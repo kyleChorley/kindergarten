@@ -20,7 +20,7 @@
     var values = [];
     for (var i = 0; i < inputs.length; ++i) {
       if (inputs[i].type === "checkbox" &&
-        inputs[i].name === name &&
+        inputs[i].name === kita &&
         inputs[i].checked) {
         values.push(inputs[i].value);
       }
@@ -29,10 +29,10 @@
   }
 
   function addCheck() {
-    var kitas = getCheckboxes("form_id", "vehicle");
+    var kitas = getCheckboxes("form_id", "kita");
 
     var output = document.getElementById("output");
-    var msg = "Selected Kitas: <br />";
+    var msg = "Selected Kitas: ";
     msg += kitas.length > 0 ? kitas.toString() : "-";
     output.innerHTML = msg;
   }
