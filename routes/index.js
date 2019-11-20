@@ -13,7 +13,6 @@ const User = require("../models/User");
 router.get("/api/kitas", (req, res, next) => {
   Kita.find()
     .then(documents => {
-      console.log("HHHEELLLLLLOOOOOOO");
       res.json(documents);
     })
     .catch(err => {
@@ -73,10 +72,16 @@ router.get('/profile/:commentId/delete', (req, res) => {
 
 router.get("/kita/:kitaId", loginCheck(), (req, res, next) => {
 
-  Kita.findById(req.params.kitaId)
+  Kita.findById(req.params.kitaId).populate({
+      path: "comments", // populates the `comments` field in the Kita
+      populate: {
+        path: "author" // populates the `author` field in the Comment
+      }
+    })
     .then(kita => {
       res.render('kitaDetail.hbs', {
-        kita: kita
+        kita: kita,
+        loggedIn: req.user
       })
 
     })

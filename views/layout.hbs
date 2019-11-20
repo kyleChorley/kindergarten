@@ -9,6 +9,11 @@
   <link rel="stylesheet" href="/stylesheets/style.css" />
   <script src='https://api.mapbox.com/mapbox-gl-js/v1.4.1/mapbox-gl.js'></script>
   <link href='https://api.mapbox.com/mapbox-gl-js/v1.4.1/mapbox-gl.css' rel='stylesheet' />
+  <script
+    src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.2.0/mapbox-gl-geocoder.min.js'></script>
+  <link rel='stylesheet'
+    href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.2.0/mapbox-gl-geocoder.css'
+    type='text/css' />
   <script <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
 
@@ -24,12 +29,12 @@
     </form>
     <div>
       {{#if loggedIn}}
-      <a href="/profile">Profile</a>
-      <a href="/auth/logout">Log out</a>
+      <a href="/profile">Profil</a>
+      <a href="/auth/logout">Abmelden</a>
       {{else}}
-      <a href="/auth/signup">Sign up</a>
-      <a href="/auth/login">Log in</a>
-      <a href="/auth/google">Log in with Google</a>
+      <a href="/auth/signup">Registrieren</a>
+      <a href="/auth/login">Anmelden</a>
+      <a href="/auth/google">Mit Google Anmelden</a>
       {{/if}}
     </div>
 
