@@ -1,5 +1,9 @@
 {{#with kita}}
+{{#if webAddress}}
 <h1><a href="{{webAddress}}">{{name}}</a></h1>
+{{else}}
+<h1><a href="">{{name}}</a></h1>
+{{/if}}
 <p>{{adresse}}, {{postleitzahl}} <br> {{stadt}} {{viertel}} <br> +49 {{telefon}} <br> {{email}}
   <br> <a href="{{webAddress}}">{{webAddress}}</a></p>
 <br>
@@ -16,7 +20,7 @@
   {{traegerart2}}</p>
 <p>Pädagogische Schwerpunkte: {{paedagogischeSchwerpunkte}} <br> Pädagogische Ansätze: {{paedagogischeAnsaetze}} <br>
   Thematische Schwerpunkte: {{thematischeSchwerpunkte}}</p>
-<br><br>
+<br>
 
 
 
