@@ -13,6 +13,7 @@ const User = require("../models/User");
 router.get("/api/kitas", (req, res, next) => {
   Kita.find()
     .then(documents => {
+      console.log("HHHEELLLLLLOOOOOOO");
       res.json(documents);
     })
     .catch(err => {
@@ -20,24 +21,6 @@ router.get("/api/kitas", (req, res, next) => {
     });
 });
 
-
-// router.get("/api/kitas", (req, res, next) => {
-//   // Kita.find()
-//   //   .then(documents => {
-//   //     res.json(documents);
-//   //   })
-//   //   .catch(err => {
-//   //     next(err);
-//   //   });
-
-//   Kita.findById("5dd3e3558ec2d852f856b6db")
-//     .then(documents => {
-//       res.json(documents)
-//     })
-//     .catch(err => {
-//       next(err);
-//     });
-// });
 
 router.get("/", (req, res, next) => {
   res.render("index", {
