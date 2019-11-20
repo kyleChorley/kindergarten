@@ -34,7 +34,10 @@
 <a href="/kitaDetail/{{comment._id}}/delete">Delete this comment. ❌</a>
 {{/if}} --}}
 
-
+<form id="comment-form">
+  <label for="comment">Add a comment</label>
+  <input type="text" id="comment">
+</form>
 
 {{/with}}
 <div id="comment-box">
@@ -50,10 +53,7 @@
 
 
 
-<form id="comment-form">
-  <label for="comment">Add a comment</label>
-  <input type="text" id="comment">
-</form>
+
 
 <script>
   document.getElementById('comment-form').onsubmit = event => {
