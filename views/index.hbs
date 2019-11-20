@@ -61,14 +61,27 @@
           response.data.forEach(point => {
             console.log(point);
             const coordinates = [point.long, point.lat];
-            new mapboxgl.Marker().setLngLat(coordinates).addTo(map)
+            new mapboxgl.Marker().setLngLat(coordinates).setPopup(new mapboxgl.Popup({ offset: 25 }).setHTML('<h3>' + point + '</h3>')).addTo(map)
           })
         })
+
       }
 
       getMarkers();
 
     </script>
+
+
+    {{!-- .forEach(function (marker) {
+            let popup = new mapboxgl.Popup()
+              .setHTML('/kitaDetail.hbs');
+
+            new mapboxgl.Marker()
+              .setLngLat(marker.coordinates)
+              .setPopup(popup)
+              .addTo(map);
+          }); --}}
+
 
 </body>
 

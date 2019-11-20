@@ -1,11 +1,5 @@
 <h1>{{name}}</h1>
 
-
-{{!-- <form id="form_id" onsubmit="return false;">
-  <input type="checkbox" name="kita" value="{{name}}" checked> Add to my application list.<br>
-  <button onclick="addCheck();">Add to my list.</button>
-</form> --}}
-
 {{#with kita}}
 <h1>{{name}}</h1>
 <p>Addresse: {{addresse}}</p>
@@ -30,14 +24,11 @@
 <p>Thematische Schwerpunkte: {{thematischeSchwerpunkte}}</p>
 
 
-{{!-- {{#if showDelete}}
-<a href="/kitaDetail/{{comment._id}}/delete">Delete this comment. ❌</a>
-{{/if}} --}}
-
 <form id="comment-form">
   <label for="comment">Add a comment</label>
   <input type="text" id="comment">
 </form>
+
 
 {{/with}}
 <div id="comment-box">
@@ -49,10 +40,6 @@
   {{/each}}
   {{/if}}
 </div>
-
-
-
-
 
 
 <script>
