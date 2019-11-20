@@ -47,22 +47,21 @@
     // Add the geocoder to the map
     map.addControl(geocoder);
 
-    geocoder.on('result', () => {
 
-      const getMarkers = () => {
-        axios.get('/api/kitas').then(response => {
-          //console.log('map', response)
-          response.data.forEach(point => {
-            console.log(point);
-            const coordinates = [point.long, point.lat];
-            new mapboxgl.Marker().setLngLat(coordinates).addTo(map)
+    const getMarkers = () => {
+      axios.get('/api/kitas').then(response => {
+        //console.log('map', response)
+        response.data.forEach(point => {
+          console.log(point);
+          const coordinates = [point.long, point.lat];
+          new mapboxgl.Marker().setLngLat(coordinates).addTo(map)
 
-          })
         })
-      }
+      })
+    }
 
-      getMarkers()
-    });
+    getMarkers();
+
 
   </script>
 
