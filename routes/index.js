@@ -13,7 +13,6 @@ const User = require("../models/User");
 router.get("/api/kitas", (req, res, next) => {
   Kita.find()
     .then(documents => {
-      console.log("HHHEELLLLLLOOOOOOO");
       res.json(documents);
     })
     .catch(err => {
