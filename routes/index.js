@@ -80,7 +80,8 @@ router.get("/kita/:kitaId", loginCheck(), (req, res, next) => {
     })
     .then(kita => {
       res.render('kitaDetail.hbs', {
-        kita: kita
+        kita: kita,
+        loggedIn: req.user
       })
 
     })

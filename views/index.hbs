@@ -1,88 +1,42 @@
-<!DOCTYPE html>
-<html lang="en">
+<div class="header">
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>{{title}}</title>
-  <link rel="stylesheet" href="/stylesheets/style.css" />
-  <script src='https://api.mapbox.com/mapbox-gl-js/v1.4.1/mapbox-gl.js'></script>
-  <link href='https://api.mapbox.com/mapbox-gl-js/v1.4.1/mapbox-gl.css' rel='stylesheet' />
-  <script <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-</head>
+  <h1>Finden Sie Ihre Kita</h1>
 
-<body>
+</div>
 
-  <nav class="navbar">
+<div id='map' {{!-- style='width: 400px; height: 300px' --}};></div>
 
-    <div class="header">
-      <div>
-        <a href="/">Kindergarten</a>
-      </div>
-      <form>
-        <input type="search" placeholder="Search" aria-label="Search">
-        <button class="btn" type="submit">Search</button>
-      </form>
-      <div>
-        {{#if loggedIn}}
-        <h1>Hello loggedin</h1>
-        <a href="/profile">Profile</a>
-        <a href="/auth/logout">Log out</a>
-        {{else}}
-        <a href="/auth/signup">Sign up</a>
-        <a href="/auth/login">Log in</a>
-        <a href="/auth/google">Log in with Google</a>
-        {{/if}}
-      </div>
-      <h1>Find your Kita</h1>
+<script>
 
-    </div>
+  mapboxgl.accessToken = 'pk.eyJ1Ijoia2RjaG9ybGV5IiwiYSI6ImNrMzc1ZWtyczA4OHAzbHFlcmN2Mm9ubzAifQ.4_1U9gOKEh0_8rXH4VFd8A';
+  var map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/mapbox/streets-v11',
+    //centering the map - with googled longitude + latitude values for Berlin:
+    center: [13.40, 52.52],
+    zoom: 14
+  });
 
-    <div id='map' {{!-- style='width: 400px; height: 300px' --}};></div>
+  map.addControl(new mapboxgl.NavigationControl());
 
-    <script>
+  const getMarkers = () => {
+    console.log("getmarker started")
+    axios.get('/api/kitas').then(response => {
+      console.log('map', response)
+      response.data.forEach(point => {
 
-      mapboxgl.accessToken = 'pk.eyJ1Ijoia2RjaG9ybGV5IiwiYSI6ImNrMzc1ZWtyczA4OHAzbHFlcmN2Mm9ubzAifQ.4_1U9gOKEh0_8rXH4VFd8A';
-      var map = new mapboxgl.Map({
-        container: 'map',
-        style: 'mapbox://styles/mapbox/streets-v11',
-        //centering the map - with googled longitude + latitude values for Berlin:
-        center: [13.40, 52.52],
-        zoom: 14
-      });
+        const popupText = `<a href="/kita/${point._id}"><h3>${point.name}</h3></a >
+        <p class="popupText">${point.adresse}, ${point.postleitzahl} <br> ${point.stadt} ${point.viertel} <br> +49 ${point.telefon} <br> Frühestes Aufnahmealter In Monaten: ${point.fruehestesAufnahmealterInMonaten}
+        <br>`
 
-      map.addControl(new mapboxgl.NavigationControl());
+        console.log('NEED INFO', point);
+        const coordinates = [point.long, point.lat];
+        new mapboxgl.Marker().setLngLat(coordinates).setPopup(new mapboxgl.Popup({ offset: 25 }).setHTML(popupText)).addTo(map)
+      })
+    })
 
-      const getMarkers = () => {
-        console.log("getmarker started")
-        axios.get('/api/kitas').then(response => {
-          console.log('map', response)
-          response.data.forEach(point => {
-            console.log(point);
-            const coordinates = [point.long, point.lat];
-            new mapboxgl.Marker().setLngLat(coordinates).setPopup(new mapboxgl.Popup({ offset: 25 }).setHTML('<h3>' + point + '</h3>')).addTo(map)
-          })
-        })
+  }
 
-      }
+  getMarkers();
 
-      getMarkers();
-
-    </script>
-
-
-    {{!-- .forEach(function (marker) {
-            let popup = new mapboxgl.Popup()
-              .setHTML('/kitaDetail.hbs');
-
-            new mapboxgl.Marker()
-              .setLngLat(marker.coordinates)
-              .setPopup(popup)
-              .addTo(map);
-          }); --}}
-
-
-</body>
-
-</html>
+</script>
