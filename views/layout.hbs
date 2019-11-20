@@ -25,45 +25,42 @@
 <body>
 
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">
+    <a class="navbar-brand" href="/">
       <img src="" width="30" height="30" class="d-inline-block align-top" alt="">
-      Kindergarten
-    </a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
-      aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      Kindergarten </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
+
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-      <div class="navbar-nav">
-        <a class="nav-item nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
-        <a class="nav-item nav-link" href="#">Features</a>
-        <a class="nav-item nav-link" href="#">Pricing</a>
-        <a class="nav-item nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-      </div>
+      <ul class="navbar-nav mr-auto">
+        {{!-- <a class="nav-item nav-link active" href="#">Home <span class="sr-only">(current)</span></a> --}}
+        {{#if loggedIn}}
+        <li class="nav-item">
+          <a class="nav-item nav-link" href="/profile">Profil</a>
+        </li>
+        {{!-- <a href="/profile">Profil</a> --}}
+        <li class="nav-item">
+          <a class="nav-item nav-link" href="/auth/logout">Abmelden</a>
+        </li>
+        {{else}}
+        <li class="nav-item">
+          <a class="nav-item nav-link" href="/auth/signup">Registrieren</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-item nav-link" href="/auth/login">Anmelden</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-item nav-link" href="/auth/google">Mit Google Anmelden</a>
+        </li>
+        {{/if}}
+      </ul>
+    </div>
+    </div>
     </div>
   </nav>
 
-
-  {{!-- <nav class="navbar">
-    <div>
-      <a href="/">Kindergarten</a>
-    </div>
-    <form>
-      <input type="search" placeholder="Search" aria-label="Search">
-      <button class="btn" type="submit">Search</button>
-    </form>
-    <div> --}}
-  {{#if loggedIn}}
-  <a href="/profile">Profil</a>
-  <a href="/auth/logout">Abmelden</a>
-  {{else}}
-  <a href="/auth/signup">Registrieren</a>
-  <a href="/auth/login">Anmelden</a>
-  <a href="/auth/google">Mit Google Anmelden</a>
-  {{/if}}
-  </div>
-
-  </nav>
 
   {{{body}}}
   <script src="/javascripts/script.js">
