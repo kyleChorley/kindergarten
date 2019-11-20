@@ -9,66 +9,62 @@
   <link rel="stylesheet" href="/stylesheets/style.css" />
   <script src='https://api.mapbox.com/mapbox-gl-js/v1.4.1/mapbox-gl.js'></script>
   <link href='https://api.mapbox.com/mapbox-gl-js/v1.4.1/mapbox-gl.css' rel='stylesheet' />
+  <script
+    src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.2.0/mapbox-gl-geocoder.min.js'></script>
+  <link rel='stylesheet'
+    href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.2.0/mapbox-gl-geocoder.css'
+    type='text/css' />
   <script <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
 </head>
 
 <body>
 
-  <nav class="navbar">
 
-    <div class="header">
-      <div>
-        <a href="/">Kindergarten</a>
-      </div>
-      <form>
-        <input type="search" placeholder="Search" aria-label="Search">
-        <button class="btn" type="submit">Search</button>
-      </form>
-      <div>
-        {{#if loggedIn}}
-        <h1>Hello loggedin</h1>
-        <a href="/profile">Profile</a>
-        <a href="/auth/logout">Log out</a>
-        {{else}}
-        <a href="/auth/signup">Sign up</a>
-        <a href="/auth/login">Log in</a>
-        <a href="/auth/google">Log in with Google</a>
-        {{/if}}
-      </div>
-      <h1>Find your Kita</h1>
+  <h1>Find your Kita</h1>
 
-    </div>
+  </div>
 
-    <div id='map' {{!-- style='width: 400px; height: 300px' --}};></div>
+  <div id='map'></div>
 
-    <script>
+  <script>
 
-      mapboxgl.accessToken = 'pk.eyJ1Ijoia2RjaG9ybGV5IiwiYSI6ImNrMzc1ZWtyczA4OHAzbHFlcmN2Mm9ubzAifQ.4_1U9gOKEh0_8rXH4VFd8A';
-      var map = new mapboxgl.Map({
-        container: 'map',
-        style: 'mapbox://styles/mapbox/streets-v11',
-        //centering the map - with googled longitude + latitude values for Berlin:
-        center: [13.40, 52.52],
-        zoom: 14
-      });
+    mapboxgl.accessToken = 'pk.eyJ1IjoidG9za2FtYWxpc2tlIiwiYSI6ImNrMnp5YzFhdTBra3czZ3A4OWRlYjljM28ifQ.ezvu3fb-mf_LzX6zcKGTVg';
+    var map = new mapboxgl.Map({
+      container: 'map',
+      style: 'mapbox://styles/mapbox/streets-v11',
+      center: [13.40, 52.52],
+      zoom: 14
+    });
 
-      map.addControl(new mapboxgl.NavigationControl());
+    var geocoder = new MapboxGeocoder({ // Initialize the geocoder
+      accessToken: mapboxgl.accessToken, // Set the access token
+      mapboxgl: mapboxgl, // Set the mapbox-gl instance
+      marker: false, // Do not use the default marker style
+      placeholder: 'Search for Kitas in Berlin'
+    });
+
+    // Add the geocoder to the map
+    map.addControl(geocoder);
+
+    geocoder.on('result', () => {
 
       const getMarkers = () => {
-        console.log("getmarker started")
         axios.get('/api/kitas').then(response => {
-          console.log('map', response)
+          //console.log('map', response)
           response.data.forEach(point => {
             console.log(point);
             const coordinates = [point.long, point.lat];
             new mapboxgl.Marker().setLngLat(coordinates).addTo(map)
+
           })
         })
       }
 
-      getMarkers();
+      getMarkers()
+    });
 
-    </script>
+  </script>
 
 </body>
 
