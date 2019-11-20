@@ -1,15 +1,14 @@
-<h1>Welcome {{user.name}}</h1>
-<a href='/kita/5dd28caa883a5e7d53a230b5'>Go to a very specific Kita</a>
+<h1>Wilkommen {{user.name}}</h1>
 
 <div id="comment-box">
   {{#if comments}}
-  <h2>Comments</h2>
+  <h2>Kommentare</h2>
   {{#each comments}}
   {{#with kita}}
   <h4>{{name}}</h4>
   {{/with}}
 
   <p>{{content}}</p>
-  <a href="/profile/{{_id}}/delete">Delete this comment❌</a> {{/each}}
+  <a href="/profile/{{_id}}/delete">Diesen Kommentar löschen❌</a> {{/each}}
   {{/if}}
 </div>
