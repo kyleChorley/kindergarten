@@ -10,6 +10,7 @@ a {
   color: #00B7FF; }
 
 #map {
-  width: 100%; }
+  height: 80vh;
+  width: 90vh; }
 
 /*# sourceMappingURL=style.css.map */
