@@ -70,12 +70,14 @@ router.get('/profile/:commentId/delete', (req, res) => {
   });
 })
 
-router.get("/kita/:kitaId", loginCheck(), (req, res, next) => {
+router.get("/kita/:kitaId", (req, res, next) => {
 
   Kita.findById(req.params.kitaId).populate({
       path: "comments", // populates the `comments` field in the Kita
       populate: {
-        path: "author" // populates the `author` field in the Comment
+        path: "author", // populates the `author` field in the Comment
+        loggedIn: req.user
+
       }
     })
     .then(kita => {
@@ -93,7 +95,6 @@ router.get("/kita/:kitaId", loginCheck(), (req, res, next) => {
 router.post("/kitaDetail/:kitaId/comment", loginCheck(), (req, res, next) => {
   const content = req.body.comment;
   const author = req.user._id;
-
   Comment.create({
       content: content,
       author: author,

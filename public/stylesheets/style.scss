@@ -1,5 +1,4 @@
 body {
-  padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
   background: #404040;
   color: #f8f8f8;
@@ -12,10 +11,41 @@ a {
 }
 
 #map {
-  height: 80vh;
-  width: 90vw;
+  height: 90vh;
+  width: 100vw;
+  position: fixed;
+
 }
 
 .popupText {
   color: black;
+}
+
+footer {
+  background-color: rgb(187, 186, 184);
+
+  position: fixed;
+  bottom: 0;
+  width: 100vw;
+}
+
+.footer-class {
+
+  color: white;
+
+  padding: 10px;
+  width: 195px;
+
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: baseline;
+}
+
+footer p {
+  padding-left: 20px;
+}
+
+footer img {
+  width: 25px;
 }
