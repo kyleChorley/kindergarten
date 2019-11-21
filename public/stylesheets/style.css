@@ -4,20 +4,16 @@ body {
   background: #404040;
   color: #f8f8f8;
   margin: 0;
-  -webkit-font-smoothing: antialiased;
-}
+  -webkit-font-smoothing: antialiased; }
 
 a {
-  color: #00B7FF;
-}
+  color: #00B7FF; }
 
 #map {
   height: 80vh;
-  width: 90vw;
-}
+  width: 90vw; }
 
 .popupText {
-  color: black;
-}
+  color: black; }
 
 /*# sourceMappingURL=style.css.map */
