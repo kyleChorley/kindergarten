@@ -103,6 +103,7 @@ router.get("/kita/:kitaId", (req, res, next) => {
 router.post("/kitaDetail/:kitaId/comment", loginCheck(), (req, res, next) => {
   const content = req.body.comment;
   const author = req.user._id;
+  console.log("req.user", author)
   Comment.create({
       content: content,
       author: author,
@@ -110,6 +111,7 @@ router.post("/kitaDetail/:kitaId/comment", loginCheck(), (req, res, next) => {
       loggedIn: req.user
     })
     .then(comment => {
+      console.log("backend comment before populate", comment)
       return Kita.findOneAndUpdate({
           _id: req.params.kitaId
         }, {
@@ -126,7 +128,7 @@ router.post("/kitaDetail/:kitaId/comment", loginCheck(), (req, res, next) => {
           }
         })
         .then(something => {
-          console.log(something);
+          console.log("Kita Route", something);
           res.json(something.comments); // updated comments array
         });
     })
