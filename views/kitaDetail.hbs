@@ -1,45 +1,55 @@
 <div class="kita-details">
-  {{#with kita}}
-  {{#if webAddress}}
-  <h1><a href="{{webAddress}}">{{name}}</a></h1>
-  {{else}}
-  <h1><a href="">{{name}}</a></h1>
-  {{/if}}
-  <p>{{adresse}}, {{postleitzahl}} <br> {{stadt}} {{viertel}} <br> +49 {{telefon}} <br> {{email}}
-    <br> <a href="{{webAddress}}">{{webAddress}}</a></p>
-  <br>
-  <p>Frühestes Aufnahmealter in Monaten: {{fruehestesAufnahmealterInMonaten}} <br> Altersmischung: {{altersmischung}}
+  <div class="kita-details-name">
+    {{#with kita}}
+    {{#if webAddress}}
+    <h1><a class="kita-details-name-text" href="{{webAddress}}">{{name}}</a></h1>
+    {{else}}
+    <h1><a href="">{{name}}</a></h1>
+    {{/if}}
+  </div>
+  <div class="kita-details-address-and-ages">
+    <div>
+      <p>{{adresse}}, {{postleitzahl}} <br> {{stadt}} {{viertel}} <br> +49 {{telefon}} <br> {{email}}
+        <br> <a href="{{webAddress}}">{{webAddress}}</a></p>
+      <br>
+    </div>
+    <div class="kita-details-ages">
+      <p>Frühestes Aufnahmealter in Monaten: {{fruehestesAufnahmealterInMonaten}} <br> Altersmischung:
+        {{altersmischung}} <br> Angebote: {{angeboten}} <br>
+        <ul>
+          <li>Unter 3 Jahre: {{unter3Jahre}}</li>
+          <li>Über 3 Jahre: {{ueber3Jahre}}</li>
+        </ul>
+      </p>
+    </div>
+  </div>
+  <div>
+    <p>Angebote: {{angebote}} <br> Einrichtungsart: {{einrichtungsart}} <br> Trägerart: {{traegerart}} <br> Trägerart 2:
+      {{traegerart2}}</p>
+    <p>Pädagogische Schwerpunkte: {{paedagogischeSchwerpunkte}} <br> Pädagogische Ansätze: {{paedagogischeAnsaetze}}
+      <br>
+      Thematische Schwerpunkte: {{thematischeSchwerpunkte}}</p>
     <br>
-    <p>Angebote: {{angeboten}} <br>
-      <ul>
-        <li>Unter 3 Jahre: {{unter3Jahre}}</li>
-        <li>Über 3 Jahre: {{ueber3Jahre}}</li>
-      </ul>
-    </p>
-  </p>
+  </div>
   <p>Öffnungszeiten: {{oeffnungszeiten}}</p>
-  <p>Angebote: {{angebote}} <br> Einrichtungsart: {{einrichtungsart}} <br> Trägerart: {{traegerart}} <br> Trägerart 2:
-    {{traegerart2}}</p>
-  <p>Pädagogische Schwerpunkte: {{paedagogischeSchwerpunkte}} <br> Pädagogische Ansätze: {{paedagogischeAnsaetze}} <br>
-    Thematische Schwerpunkte: {{thematischeSchwerpunkte}}</p>
-  <br>
 
 
-
-  <form action="mailto:kdchorley@hotmail.com" method="post" enctype="text/plain">
-    <input type="text" name="Vorname" placeholder="Vorname"><br>
-    <input type="text" name="Name" required="" placeholder="Name"><br>
-    <textarea name="Nachricht" rows="15" cols="120" required="" placeholder="Nachricht"></textarea><br>
-    <button type="submit">Absenden</button>
-  </form>
-  <br><br>
+  <div class="kita-details-contact-form">
+    <form action="mailto:kdchorley@hotmail.com" method="post" enctype="text/plain">
+      <input class="kita-details-contact-form-vorname" type="text" name="Vorname" placeholder="Vorname"><br>
+      <input class="kita-details-contact-form-name" type="text" name="Name" required="" placeholder="Name"><br>
+      <textarea class="kita-details-contact-form-text-area" name="Nachricht" rows="5" cols="85" required=""
+        placeholder="Nachricht"></textarea><br>
+      <button class="kita-details-contact-form-button" type="submit">Absenden</button>
+    </form>
+  </div>
 
   {{/with}}
 
   {{#if loggedIn}}
+  <h3><label for="comment">Kommentiere Kita</label></h3>
   <form id="comment-form">
-    <label for="comment">Kommentiere Kita</label>
-    <input type="text" id="comment">
+    <input class="comment-form-text-area" type="text" id="comment">
   </form>
   {{else}}
   <p>Please log in to leave comments.</p>
@@ -60,10 +70,11 @@
 <script>
   document.getElementById('comment-form').onsubmit = event => {
     event.preventDefault(); // prevents the default behaviour of the form
-
+    console.log("beginning of submit")
     axios.post("/kitaDetail/{{kita._id}}/comment", {
       comment: document.getElementById('comment').value
     }).then(response => {
+      //console.log(response.data)
       let commentBox = '<h2>Comments</h2>';
 
       response.data.forEach(comment => {
