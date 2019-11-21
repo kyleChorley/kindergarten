@@ -1,10 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const Kita = require("../models/Kita");
-const Comment = require("../models/Comment")
+const Comment = require("../models/Comment");
 const User = require("../models/User");
 /* GET home page */
-
 
 // router.get("/map", (req, res, next) => {
 //   res.render("map.hbs");
@@ -19,7 +18,6 @@ router.get("/api/kitas", (req, res, next) => {
       next(err);
     });
 });
-
 
 router.get("/", (req, res, next) => {
   res.render("index", {
@@ -58,6 +56,17 @@ router.get("/profile", loginCheck(), (req, res, next) => {
     });
 });
 
+router.get("/profile/:commentId/delete", (req, res) => {
+  const id = req.params.commentId;
+  Comment.findByIdAndDelete(id)
+    .then(comment => {
+      console.log(comment);
+      res.redirect("/profile");
+    })
+    .catch(err => {
+      next(err);
+    });
+});
 
 
 router.get('/profile/:commentId/delete', (req, res) => {
@@ -70,20 +79,21 @@ router.get('/profile/:commentId/delete', (req, res) => {
   });
 })
 
-router.get("/kita/:kitaId", loginCheck(), (req, res, next) => {
+router.get("/kita/:kitaId", (req, res, next) => {
 
   Kita.findById(req.params.kitaId).populate({
       path: "comments", // populates the `comments` field in the Kita
       populate: {
-        path: "author" // populates the `author` field in the Comment
+        path: "author", // populates the `author` field in the Comment
+        loggedIn: req.user
+
       }
     })
     .then(kita => {
-      res.render('kitaDetail.hbs', {
+      res.render("kitaDetail.hbs", {
         kita: kita,
         loggedIn: req.user
-      })
-
+      });
     })
     .catch(err => {
       next(err);
@@ -93,11 +103,11 @@ router.get("/kita/:kitaId", loginCheck(), (req, res, next) => {
 router.post("/kitaDetail/:kitaId/comment", loginCheck(), (req, res, next) => {
   const content = req.body.comment;
   const author = req.user._id;
-
   Comment.create({
       content: content,
       author: author,
-      kita: req.params.kitaId
+      kita: req.params.kitaId,
+      loggedIn: req.user
     })
     .then(comment => {
       return Kita.findOneAndUpdate({
@@ -124,27 +134,5 @@ router.post("/kitaDetail/:kitaId/comment", loginCheck(), (req, res, next) => {
       next(err);
     });
 });
-
-// router.get("/kitaDetail/:kitaId/delete", loginCheck(), (req, res, next) => {
-//   const query = {
-//     _id: req.params.kitaId
-//   };
-
-//   if (req.user.role !== "admin") {
-//     query.owner = req.user._id;
-//   }
-
-//   // if the user that made the request is the one that created the room:
-//   // delete the comment where the `_id` of the  is the one from the params and the `owner` of the room is the user who made the request
-
-//   Comment.deleteOne(query)
-//     .then(() => {
-//       res.redirect("/kitaDetail/:kitaId");
-//     })
-//     .catch(err => {
-//       next(err);
-//     });
-// });
-
 
 module.exports = router;

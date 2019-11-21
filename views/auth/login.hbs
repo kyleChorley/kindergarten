@@ -1,12 +1,12 @@
-<h2>Login</h2>
+<h2>Anmelden</h2>
 
 <form action="/auth/login" method="POST" id="form-container">
-  <label for="username">Username</label>
+  <label for="username">Nutzername</label>
   <input id="username" type="text" name="username" placeholder="Your name">
 
   <br><br>
 
-  <label for="password">Password</label>
+  <label for="password">Passwort</label>
   <input id="password" type="password" name="password" placeholder="Your password">
   <br>
   {{#if message }}
@@ -18,7 +18,7 @@
   <button>Login</button>
 
   <p class="account-message">
-    Don't have an account yet?
-    <a href="/auth/signup">Signup</a>
+    Sie haben noch keinen Account?
+    <a href="/auth/signup">Registrieren</a>
   </p>
 </form>

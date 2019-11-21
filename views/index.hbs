@@ -1,6 +1,8 @@
-<h1>Finden Sie Ihre Kita</h1>
-
-
+<div>
+  <h1>Willkommen im Kindergarten!</h1>
+  <p>Search for kitas in your neighbourhood.</p>
+  <p>Sign up or login to use our easy application process</p>
+</div>
 <div id='map'></div>
 
 <script>
@@ -17,25 +19,37 @@
     accessToken: mapboxgl.accessToken, // Set the access token
     mapboxgl: mapboxgl, // Set the mapbox-gl instance
     marker: false, // Do not use the default marker style
-    placeholder: 'Search for Kitas in Berlin'
+    placeholder: 'Finden Sie Kitas in Berlin'
   });
 
   // Add the geocoder to the map
   map.addControl(geocoder);
 
 
+
   const getMarkers = () => {
     axios.get('/api/kitas').then(response => {
       //console.log('map', response)
       response.data.forEach(point => {
+        var markerHeight = 55, markerRadius = 35, linearOffset = 25;
+        var popupOffsets = {
+          'top': [0, 20],
+          'top-left': [0, 0],
+          'top-right': [0, 0],
+          'bottom': [0, -20 - markerHeight],
+          'bottom-left': [linearOffset, (markerHeight - markerRadius + linearOffset) * -1],
+          'bottom-right': [-linearOffset, (markerHeight - markerRadius + linearOffset) * -1],
+          'left': [markerRadius, (markerHeight - markerRadius) * -1],
+          'right': [-markerRadius, (markerHeight - markerRadius) * -1]
+        };
 
-        const popupText = `<a href="/kita/${point._id}"><h3>${point.name}</h3></a >
-        <p class="popupText">${point.adresse}, ${point.postleitzahl} <br> ${point.stadt} ${point.viertel} <br> +49 ${point.telefon} <br> Frühestes Aufnahmealter In Monaten: ${point.fruehestesAufnahmealterInMonaten}
-        <br>`
+        const popupText = `<div class="popupTextBox" ><a href="/kita/${point._id}"><h3>${point.name}</h3></a >
+        <p class="popupText">${point.adresse}, ${point.postleitzahl} <br> ${point.stadt} ${point.viertel} <br> +49 ${point.telefon} <br> Frühestes Aufnahmealter In Monaten: <span class="earliestAge" style="color: black;">${point.fruehestesAufnahmealterInMonaten}
+        </span><br></div>`
 
         console.log(point);
         const coordinates = [point.long, point.lat];
-        new mapboxgl.Marker().setLngLat(coordinates).setPopup(new mapboxgl.Popup({ offset: 25 }).setHTML(popupText)).addTo(map)
+        new mapboxgl.Marker().setLngLat(coordinates).setPopup(new mapboxgl.Popup({ offset: popupOffsets }).setMaxWidth("700px").setHTML(popupText)).addTo(map)
 
       })
     })
