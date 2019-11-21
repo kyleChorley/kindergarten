@@ -2,24 +2,55 @@ html {
   font-size: 10px;
 }
 
-
 body {
   font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
-  background-color: #404040;
-  color: #f8f8f8;
+  background-color: rgba(83, 83, 83, 0.062);
+  color: rgb(126, 126, 126);
   margin: 0;
   -webkit-font-smoothing: antialiased;
 }
 
+h1,
+h2,
+h3 {
+  color: rgb(40, 40, 40);
+  padding-bottom: 20px;
+}
+
 a {
-  color: #00B7FF;
+  color: #00b7ff;
+}
+
+nav {
+  background-color: rgba(83, 83, 83, 0.062);
+  box-shadow: rgba(156, 156, 156, 0.514);
+}
+
+.navbar-brand,
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 #map {
   height: 90vh;
   width: 100vw;
   position: fixed;
+}
 
+nav {
+  font-size: 2rem;
+}
+
+.home-text {
+  padding-left: 20px;
+  padding-bottom: 20px;
+  font-size: 2rem;
+}
+
+.mapboxgl-ctrl-geocoder {
+  width: 50vw !important;
 }
 
 .mapboxgl-popup-close-button {
@@ -33,7 +64,6 @@ a {
   border: 1px solid black;
   padding: 20px;
 }
-
 
 .mapboxgl-popup-tip {
   display: none;
@@ -80,11 +110,10 @@ footer {
 }
 
 .footer-class {
-
   color: white;
 
   padding: 10px;
-  width: 195px;
+  width: 210px;
 
   display: flex;
   flex-wrap: wrap;
@@ -93,9 +122,27 @@ footer {
 }
 
 footer p {
-  padding-left: 20px;
+  padding-left: 7px;
+  padding-top: 7px;
+  font-size: 1.5rem;
 }
 
 footer img {
   width: 25px;
+}
+
+.signup,
+.login,
+.profile {
+  padding: 20px;
+  font-size: 2rem;
+}
+
+#comment-link {
+  color: rgb(40, 40, 40);
+  font-size: 2.5rem;
+}
+
+.kita-details {
+  margin: 100px;
 }

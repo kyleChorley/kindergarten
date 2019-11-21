@@ -1,14 +1,25 @@
-<h1>Willkommen {{user.username}}</h1>
+<div class="profile">
+  <h1>Willkommen {{user.username}}</h1>
 
-<div id="comment-box">
-  {{#if comments}}
-  <h2>Kommentare</h2>
-  {{#each comments}}
-  {{#with kita}}
-  <h4>{{name}}</h4>
-  {{/with}}
+  <div id="comment-box">
+    {{#if comments}}
+    <h2>Hier sind Ihre kommentierten Kitas</h2>
+    {{#each comments}}
+    {{#with kita}}
+    <h4>
+      <a id="comment-link" href="/kita/{{_id}}">
+        {{name}}</a>
+    </h4>
+    {{/with}}
 
-  <p>{{content}}</p>
-  <a href="/profile/{{_id}}/delete">Diesen Kommentar löschen❌</a> {{/each}}
-  {{/if}}
+    <p>{{content}}</p>
+    <a href="/profile/{{_id}}/delete">Diesen Kommentar löschen ❌</a> {{/each}}
+    {{/if}}
+  </div>
+
+  {{!-- <div class="profile-greeting">
+    <h2>Finden Sie Ihre Kita und behalten Sie den Überblick.</h2>
+    <img src="/images/SeekPng.com_little-kid-png_2375574.png" alt="drawing">
+  </div> --}}
+
 </div>
