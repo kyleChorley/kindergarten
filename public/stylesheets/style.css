@@ -52,7 +52,54 @@ a {
   font-size: 1.5rem; }
 
 .kita-details {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  margin-left: 25px;
+  margin-bottom: 100px;
   font-size: 1.5rem; }
+
+.kita-details-name {
+  margin-bottom: 15px; }
+
+.kita-details-name-text {
+  color: #bbbab8;
+  text-decoration: none; }
+
+.kita-details-address-and-ages {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start; }
+
+.kita-details-ages {
+  margin-left: 200px; }
+
+.kita-details-ages p {
+  margin-bottom: 0; }
+
+.kita-details-contact-form {
+  margin-top: 15px; }
+
+.kita-details-contact-form-vorname {
+  margin-bottom: 10px;
+  border-radius: 5px; }
+
+.kita-details-contact-form-name {
+  margin-bottom: 10px;
+  border-radius: 5px; }
+
+.kita-details-contact-form-text-area {
+  margin-bottom: 10px;
+  border-radius: 5px; }
+
+.kita-details-contact-form-button {
+  background-color: #f8f9fa;
+  border-radius: 5px;
+  text-decoration: none;
+  color: black; }
+
+.comment-form-text-area {
+  border-radius: 5px; }
 
 footer {
   background-color: #bbbab8;
