@@ -1,59 +1,61 @@
-{{#with kita}}
-{{#if webAddress}}
-<h1><a href="{{webAddress}}">{{name}}</a></h1>
-{{else}}
-<h1><a href="">{{name}}</a></h1>
-{{/if}}
-<p>{{adresse}}, {{postleitzahl}} <br> {{stadt}} {{viertel}} <br> +49 {{telefon}} <br> {{email}}
-  <br> <a href="{{webAddress}}">{{webAddress}}</a></p>
-<br>
-<p>Frühestes Aufnahmealter in Monaten: {{fruehestesAufnahmealterInMonaten}} <br> Altersmischung: {{altersmischung}} <br>
-  <p>Angebote: {{angeboten}} <br>
-    <ul>
-      <li>Unter 3 Jahre: {{unter3Jahre}}</li>
-      <li>Über 3 Jahre: {{ueber3Jahre}}</li>
-    </ul>
-  </p>
-</p>
-<p>Öffnungszeiten: {{oeffnungszeiten}}</p>
-<p>Angebote: {{angebote}} <br> Einrichtungsart: {{einrichtungsart}} <br> Trägerart: {{traegerart}} <br> Trägerart 2:
-  {{traegerart2}}</p>
-<p>Pädagogische Schwerpunkte: {{paedagogischeSchwerpunkte}} <br> Pädagogische Ansätze: {{paedagogischeAnsaetze}} <br>
-  Thematische Schwerpunkte: {{thematischeSchwerpunkte}}</p>
-<br>
-
-
-
-<form action="mailto:kdchorley@hotmail.com" method="post" enctype="text/plain">
-  <input type="text" name="Vorname" placeholder="Vorname"><br>
-  <input type="text" name="Name" required="" placeholder="Name"><br>
-  <textarea name="Nachricht" rows="15" cols="120" required="" placeholder="Nachricht"></textarea><br>
-  <button type="submit">Absenden</button>
-</form>
-<br><br>
-
-{{/with}}
-
-{{#if loggedIn}}
-<form id="comment-form">
-  <label for="comment">Kommentiere Kita</label>
-  <input type="text" id="comment">
-</form>
-{{else}}
-<p>Please log in to leave comments.</p>
-{{/if}}
-
-
-<div id="comment-box">
-  {{#if kita.comments}}
-  <h2>Kommentare</h2>
-  {{#each kita.comments}}
-  <h4>{{author.username}}</h4>
-  <p>{{content}}</p>
-  {{/each}}
+<div class="kita-details">
+  {{#with kita}}
+  {{#if webAddress}}
+  <h1><a href="{{webAddress}}">{{name}}</a></h1>
+  {{else}}
+  <h1><a href="">{{name}}</a></h1>
   {{/if}}
-</div>
+  <p>{{adresse}}, {{postleitzahl}} <br> {{stadt}} {{viertel}} <br> +49 {{telefon}} <br> {{email}}
+    <br> <a href="{{webAddress}}">{{webAddress}}</a></p>
+  <br>
+  <p>Frühestes Aufnahmealter in Monaten: {{fruehestesAufnahmealterInMonaten}} <br> Altersmischung: {{altersmischung}}
+    <br>
+    <p>Angebote: {{angeboten}} <br>
+      <ul>
+        <li>Unter 3 Jahre: {{unter3Jahre}}</li>
+        <li>Über 3 Jahre: {{ueber3Jahre}}</li>
+      </ul>
+    </p>
+  </p>
+  <p>Öffnungszeiten: {{oeffnungszeiten}}</p>
+  <p>Angebote: {{angebote}} <br> Einrichtungsart: {{einrichtungsart}} <br> Trägerart: {{traegerart}} <br> Trägerart 2:
+    {{traegerart2}}</p>
+  <p>Pädagogische Schwerpunkte: {{paedagogischeSchwerpunkte}} <br> Pädagogische Ansätze: {{paedagogischeAnsaetze}} <br>
+    Thematische Schwerpunkte: {{thematischeSchwerpunkte}}</p>
+  <br>
 
+
+
+  <form action="mailto:kdchorley@hotmail.com" method="post" enctype="text/plain">
+    <input type="text" name="Vorname" placeholder="Vorname"><br>
+    <input type="text" name="Name" required="" placeholder="Name"><br>
+    <textarea name="Nachricht" rows="15" cols="120" required="" placeholder="Nachricht"></textarea><br>
+    <button type="submit">Absenden</button>
+  </form>
+  <br><br>
+
+  {{/with}}
+
+  {{#if loggedIn}}
+  <form id="comment-form">
+    <label for="comment">Kommentiere Kita</label>
+    <input type="text" id="comment">
+  </form>
+  {{else}}
+  <p>Please log in to leave comments.</p>
+  {{/if}}
+
+
+  <div id="comment-box">
+    {{#if kita.comments}}
+    <h2>Kommentare</h2>
+    {{#each kita.comments}}
+    <h4>{{author.username}}</h4>
+    <p>{{content}}</p>
+    {{/each}}
+    {{/if}}
+  </div>
+</div>
 
 <script>
   document.getElementById('comment-form').onsubmit = event => {
