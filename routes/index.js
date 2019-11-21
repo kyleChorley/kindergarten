@@ -68,19 +68,31 @@ router.get("/profile/:commentId/delete", (req, res) => {
     });
 });
 
+
+router.get('/profile/:commentId/delete', (req, res) => {
+  const id = req.params.commentId
+  Comment.findByIdAndDelete(id).then(comment => {
+    console.log(comment)
+    res.redirect('/profile')
+  }).catch(err => {
+    next(err);
+  });
+})
+
 router.get("/kita/:kitaId", (req, res, next) => {
-  const user = req.user
-  Kita.findById(req.params.kitaId)
-    .populate({
+
+  Kita.findById(req.params.kitaId).populate({
       path: "comments", // populates the `comments` field in the Kita
       populate: {
-        path: "author" // populates the `author` field in the Comment
+        path: "author", // populates the `author` field in the Comment
+        loggedIn: req.user
+
       }
     })
     .then(kita => {
       res.render("kitaDetail.hbs", {
         kita: kita,
-        loggedIn: user
+        loggedIn: req.user
       });
     })
     .catch(err => {
@@ -91,7 +103,6 @@ router.get("/kita/:kitaId", (req, res, next) => {
 router.post("/kitaDetail/:kitaId/comment", loginCheck(), (req, res, next) => {
   const content = req.body.comment;
   const author = req.user._id;
-
   Comment.create({
       content: content,
       author: author,
