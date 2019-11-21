@@ -157,7 +157,7 @@ passport.use(
           } else {
             return User.create({
               googleId: profile.id,
-              username: username
+              username: profile.displayName
             }).then(newUser => {
               done(null, newUser);
             });
