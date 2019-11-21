@@ -4,5 +4,3 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 }, false);
-
-import "bootstrap/dist/js/bootstrap.bundle";

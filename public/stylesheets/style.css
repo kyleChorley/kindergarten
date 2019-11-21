@@ -1,8 +1,8 @@
-* {
+html {
   font-size: 10px; }
 
 body {
-  font: 1.5rem "Lucida Grande", Helvetica, Arial, sans-serif;
+  font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
   background: #404040;
   color: #f8f8f8;
   margin: 0;
@@ -12,8 +12,9 @@ a {
   color: #00B7FF; }
 
 #map {
-  height: 95vh;
-  width: 100vw; }
+  height: 90vh;
+  width: 100vw;
+  position: fixed; }
 
 .mapboxgl-popup-close-button {
   display: none; }
@@ -22,8 +23,7 @@ a {
   margin: 0;
   padding: 0 !important;
   border-radius: 10px !important;
-  border: 1px solid black;
-  padding: 20px; }
+  border: 1px solid black; }
 
 .mapboxgl-popup-tip {
   display: none; }
@@ -35,6 +35,9 @@ a {
   text-decoration: none;
   color: black;
   padding: 15px; }
+
+.popupTextBox h3 {
+  margin: 0 0 15px 0; }
 
 .popupTextBox a {
   color: black; }
@@ -50,5 +53,26 @@ a {
 
 .kita-details {
   font-size: 1.5rem; }
+
+footer {
+  background-color: #bbbab8;
+  position: fixed;
+  bottom: 0;
+  width: 100vw; }
+
+.footer-class {
+  color: white;
+  padding: 10px;
+  width: 195px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: baseline; }
+
+footer p {
+  padding-left: 20px; }
+
+footer img {
+  width: 25px; }
 
 /*# sourceMappingURL=style.css.map */
